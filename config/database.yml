@@ -7,8 +7,8 @@ default: &default
 
 development:
   <<: *default
-  database: <%= expecting %>_development
+  database: <%= 'expecting' %>_development
 
 test:
   <<: *default
-  database: <%= expecting %>_test
+  database: <%= 'expecting' %>_test
