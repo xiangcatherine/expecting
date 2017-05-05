@@ -15,7 +15,7 @@ class BabiesController < ApplicationController
 
   # POST /babies
   def create
-    @baby = current_user.examples.build(example_params)
+    @baby = current_user.babies.build(baby_params)
 
     if @baby.save
       render json: @baby, status: :created
