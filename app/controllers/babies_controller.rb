@@ -15,10 +15,10 @@ class BabiesController < ApplicationController
 
   # POST /babies
   def create
-    @baby = Baby.new(baby_params)
+    @baby = current_user.examples.build(example_params)
 
     if @baby.save
-      render json: @baby, status: :created, location: @baby
+      render json: @baby, status: :created
     else
       render json: @baby.errors, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class BabiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_baby
-      @baby = Baby.find(params[:id])
+      @baby = current_user.babies.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
