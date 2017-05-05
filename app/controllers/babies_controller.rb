@@ -1,5 +1,6 @@
 class BabiesController < ApplicationController
   before_action :set_baby, only: [:show, :update, :destroy]
+  before_action :validate_user, :set_current_user, only: %i[index create update destroy set_baby]
 
   # GET /babies
   def index
@@ -15,10 +16,10 @@ class BabiesController < ApplicationController
 
   # POST /babies
   def create
-    @baby = current_user.babies.build(baby_params)
+    @baby = current_user.build_baby(baby_params)
 
     if @baby.save
-      render json: @baby, status: :created
+      render json: @baby, status: :created, location: @baby
     else
       render json: @baby.errors, status: :unprocessable_entity
     end
@@ -41,11 +42,16 @@ class BabiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_baby
+      validate_user
       @baby = current_user.babies.find(params[:id])
+    end
+
+    def validate_user
+      set_current_user
     end
 
     # Only allow a trusted parameter "white list" through.
     def baby_params
-      params.require(:baby).permit(:age, :size)
+      params.permit(:age)
     end
 end

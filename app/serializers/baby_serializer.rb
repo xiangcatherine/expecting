@@ -1,3 +1,3 @@
 class BabySerializer < ActiveModel::Serializer
-  attributes :id, :age, :size
+  attributes :id, :age
 end
