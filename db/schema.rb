@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505135909) do
+ActiveRecord::Schema.define(version: 2) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "babies", force: :cascade do |t|
-    t.integer  "age",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "mother_id"
-    t.index ["mother_id"], name: "index_babies_on_mother_id", using: :btree
-  end
 
   create_table "examples", force: :cascade do |t|
     t.text     "text",       null: false
@@ -29,15 +21,6 @@ ActiveRecord::Schema.define(version: 20170505135909) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_examples_on_user_id", using: :btree
-  end
-
-  create_table "mothers", force: :cascade do |t|
-    t.string   "given_name",  null: false
-    t.string   "family_name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_mothers_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,7 +33,5 @@ ActiveRecord::Schema.define(version: 20170505135909) do
     t.index ["token"], name: "index_users_on_token", unique: true, using: :btree
   end
 
-  add_foreign_key "babies", "mothers"
   add_foreign_key "examples", "users"
-  add_foreign_key "mothers", "users"
 end
