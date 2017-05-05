@@ -15,10 +15,10 @@ class MothersController < ApplicationController
 
   # POST /mothers
   def create
-    @mother = Mother.new(mother_params)
+    @mother = current_user.items.build(mother_params)
 
     if @mother.save
-      render json: @mother, status: :created, location: @mother
+      render json: @mother, status: created, location: @mother
     else
       render json: @mother.errors, status: :unprocessable_entity
     end
@@ -39,13 +39,19 @@ class MothersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mother
-      @mother = Mother.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def mother_params
-      params.require(:mother).permit(:given_name, :family_name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_mother
+    validate_user
+    @mother = current_user.mothers.find(params[:id])
+  end
+
+  def validate_user
+    set_current_user
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def mother_params
+    params.require(:mother).permit(:given_name, :family_name)
+  end
 end
