@@ -1,12 +1,9 @@
-class BabiesController < ApplicationController
-  before_action :set_baby, only: [:show, :update, :destroy]
-  before_action :validate_user, :set_current_user, only: %i[index create update destroy set_baby]
+class BabiesController < ProtectedController
+  before_action :set_baby, only: [:index, :show, :update, :destroy]
 
   # GET /babies
   def index
-    @babies = Baby.all
-
-    render json: @babies
+    render json: @baby
   end
 
   # GET /babies/1
@@ -27,7 +24,9 @@ class BabiesController < ApplicationController
 
   # PATCH/PUT /babies/1
   def update
-    if @baby.update(baby_params)
+    @baby.age = @baby.current_age
+
+    if @baby.save
       render json: @baby
     else
       render json: @baby.errors, status: :unprocessable_entity
@@ -42,12 +41,8 @@ class BabiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_baby
-      validate_user
-      @baby = current_user.babies.find(params[:id])
-    end
-
-    def validate_user
       set_current_user
+      @baby = current_user.baby
     end
 
     # Only allow a trusted parameter "white list" through.
