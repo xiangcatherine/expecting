@@ -39,14 +39,15 @@ class BabiesController < ProtectedController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_baby
-      set_current_user
-      @baby = current_user.baby
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def baby_params
-      params.permit(:age)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_baby
+    set_current_user
+    @baby = current_user.baby
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def baby_params
+    params.require(:baby).permit(:age)
+  end
 end
