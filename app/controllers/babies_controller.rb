@@ -52,6 +52,6 @@ class BabiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def baby_params
-      params.permit(:age)
+      params.require(:baby).permit(:age)
     end
 end
