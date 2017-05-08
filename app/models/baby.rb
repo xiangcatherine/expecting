@@ -1,7 +1,7 @@
 class Baby < ApplicationRecord
   belongs_to :user
 
-  validates :age, presence: true
+  validates :user, :age, presence: true
 
   def current_age
     created_date = created_at.to_date
