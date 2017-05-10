@@ -5,3 +5,6 @@ Link to front-end-repo:
 
 Link to back-end deploy:
 (https://expecting.herokuapp.com/)
+
+Link to front-end-deploy:
+(https://xiangcatherine.github.io/full-stack-front-end/)
